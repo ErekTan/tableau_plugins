@@ -7,10 +7,15 @@
 		box-sizing: border-box;
 	}
 
+	html,body{
+		overflow: hidden;
+	}
+
 	.wrapper {
 		box-sizing: content-box;
 		width: 100%;
 		height: 100%;
+		overflow: hidden;
 	}
 
 	.item {
@@ -23,9 +28,37 @@
 		align-content: center;
 		justify-content: center;
 		align-items: center;
+		margin-right: 10px;
+	}
+
+	.marquee {
+		white-space: nowrap;
+	}
+
+	.marquee-content {
+		display: flex;
+		width: calc(100% + 10px);
+		animation: scroll 15s linear infinite;
+	}
+
+	.marquee-copy {
+		flex-shrink: 0;
+		width: 100%;
+	}
+
+	@keyframes scroll {
+		0% {
+			transform: translateX(0);
+		}
+
+		100% {
+			transform: translateX(-100%);
+		}
 	}
 </style>
-<div id="wrapper"></div>
+<div id="wrapper" class="marquee">
+	<div class="marquee-content" id="marquee-content"></div>
+</div>
 
 <script>
 	function getParams() {
@@ -55,5 +88,6 @@
 		var t = list[index].split("|")
 		html += `<div class="item" style="background-color:#${t[1]}">${t[0]}</div>`
 	}
-	document.getElementById('wrapper').innerHTML = html
+	var _html = `<div class="marquee-copy">${html}</div>${html}</div>`
+	document.getElementById('marquee-content').innerHTML = _html
 </script>
