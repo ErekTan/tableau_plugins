@@ -1,32 +1,51 @@
 <style>
-*{
-	width:100%;
-	height:100%;
-	margin:0;
-	padding:0;
-}
-.wrapper{
-	box-sizing: content-box;
-	width: 100%;
-	height: 100%;
-}
-.item{
-	height: 100%;
-    color: white;
-    float: left;
-    width: auto;
-    padding: 10px;
-    display: flex;
-    align-content: center;
-    justify-content: center;
-    align-items: center;
-}
+	* {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	.wrapper {
+		box-sizing: content-box;
+		width: 100%;
+		height: 100%;
+	}
+
+	.item {
+		height: 100%;
+		color: white;
+		float: left;
+		width: auto;
+		padding: 10px;
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		align-items: center;
+	}
 </style>
 <div id="wrapper"></div>
-	
+
 <script>
-	var urlParams = new URLSearchParams(window.location.search)
-	var text = urlParams.get('text')
+	function getParams() {
+		let urlParams = new URLSearchParams(window.location.search);
+
+		// Safari fallback
+		if (!urlParams) {
+			urlParams = {};
+			const search = window.location.search.substr(1);
+			search.split('&').forEach(param => {
+				let [key, value] = param.split('=');
+				urlParams[key] = value;
+			})
+		}
+
+		return urlParams;
+	}
+
+	var _urlParams = getParams();
+	var text = _urlParams.get('text')
 	//参数格式：text=abc|000000,111|ffffff
 	//abc为显示文本，000000是文本背景色
 	//alert(text)
