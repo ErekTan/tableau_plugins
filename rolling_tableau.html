@@ -1,5 +1,5 @@
 <style>
-	* {
+	abc {
 		width: 100%;
 		height: 100%;
 		margin: 0;
@@ -9,7 +9,7 @@
 
 	html,
 	body {
-		overflow: hidden;
+		overflow2: hidden;
 	}
 
 	.wrapper {
@@ -57,14 +57,33 @@
 		}
 	}
 </style>
-<script type='module'
-	src='https://prod-apnortheast-a.online.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js'></script>
 <div id="wrapper" class="marquee">
-	<div class="marquee-content" id="marquee-content">
-		
-	</div>
+	<div class="marquee-content" id="marquee-content"></div>
 </div>
+<div id="log"></div>
+
 <script>
+	setTimeout(function () {
+		try {
+			
+			document.getElementById('log').innerHTML = JSON.stringify(parent.tableau)
+			// 获取 Tableau 视图对象
+			const viz = parent.tableau.Viz.getVizs()[0]
+
+			// 获取 Tableau 工作表对象
+			const worksheet = viz.getWorkbook().getActiveSheet()
+
+			// 获取工作表中的数据
+			worksheet.getSummaryDataAsync().then(data => {
+				// 在这里处理获取到的数据
+				alert(data)
+			})
+
+		} catch (error) {
+			alert(error)
+		}
+	}, 5000)
+
 	function getParams() {
 		let urlParams = new URLSearchParams(window.location.search);
 
@@ -80,16 +99,18 @@
 
 		return urlParams;
 	}
+
 	var _urlParams = getParams();
-	var text = _urlParams.get('text');
-
-	var t = `<div class="marquee-copy" style="width:${window.innerWidth}px">`
-		+ `	<tableau-viz id="tableau-viz2" src="https://${text}" width="${window.innerWidth}" height="100" hide-tabs toolbar="hidden" ></tableau-viz>`
-		+ '</div>'
-		+ `<div style="width: ${window.innerWidth}px;height: 100%;">`
-		+ `	<tableau-viz id="tableau-viz" src="https://${text}" width="${window.innerWidth}" height="100" hide-tabs toolbar="hidden" ></tableau-viz>`
-		+ '</div>'
-
-	document.getElementById("marquee-content").innerHTML = t;
-	
+	var text = _urlParams.get('text')
+	//参数格式：text=abc|000000,111|ffffff
+	//abc为显示文本，000000是文本背景色
+	//alert(text)
+	var list = text.split(",")
+	var html = ""
+	for (let index = 0; index < list.length; index++) {
+		var t = list[index].split("|")
+		html += `<div class="item" style="background-color:#${t[1]}">${t[0]}</div>`
+	}
+	var _html = `<div class="marquee-copy">${html}</div>${html}</div>`
+	document.getElementById('marquee-content').innerHTML = _html
 </script>
