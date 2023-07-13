@@ -60,12 +60,13 @@
 <div id="wrapper" class="marquee">
 	<div class="marquee-content" id="marquee-content"></div>
 </div>
+<div id="log"></div>
 
 <script>
 	setTimeout(function () {
 		try {
 			
-			alert(parent.tableau)
+			document.getElementById('log').innerHTML = JSON.stringify(parent.tableau)
 			// 获取 Tableau 视图对象
 			const viz = parent.tableau.Viz.getVizs()[0]
 
