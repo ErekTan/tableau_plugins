@@ -65,7 +65,7 @@
 	setTimeout(function () {
 		try {
 			// 获取 Tableau 视图对象
-			const viz = parent.tableau.VizManager.getVizs()[0]
+			const viz = parent.tableau.Viz.getVizs()[0]
 
 			// 获取 Tableau 工作表对象
 			const worksheet = viz.getWorkbook().getActiveSheet()
