@@ -7,7 +7,8 @@
 		box-sizing: border-box;
 	}
 
-	html,body{
+	html,
+	body {
 		overflow: hidden;
 	}
 
@@ -61,14 +62,24 @@
 </div>
 
 <script>
-	setTimeout(function(){
+	setTimeout(function () {
 		try {
-			alert(tableau.extensions)
-			
+			// 获取 Tableau 视图对象
+			const viz = parent.tableau.VizManager.getVizs()[0]
+
+			// 获取 Tableau 工作表对象
+			const worksheet = viz.getWorkbook().getActiveSheet()
+
+			// 获取工作表中的数据
+			worksheet.getSummaryDataAsync().then(data => {
+				// 在这里处理获取到的数据
+				alert(data)
+			})
+
 		} catch (error) {
 			alert(error)
 		}
-	},5000)
+	}, 5000)
 
 	function getParams() {
 		let urlParams = new URLSearchParams(window.location.search);
