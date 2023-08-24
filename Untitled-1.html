@@ -1,0 +1,95 @@
+<style>
+	* {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+
+	html,
+	body {
+		overflow: hidden;
+	}
+
+	.wrapper {
+		box-sizing: content-box;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+	}
+
+	.item {
+		height: 100%;
+		color: white;
+		float: left;
+		width: auto;
+		padding: 10px;
+		display: flex;
+		align-content: center;
+		justify-content: center;
+		align-items: center;
+		margin-right: 10px;
+	}
+
+	.marquee {
+		white-space: nowrap;
+	}
+
+	.marquee-content {
+		display: flex;
+		width: calc(100% + 10px);
+		animation: scroll 15s linear infinite;
+	}
+
+	.marquee-copy {
+		flex-shrink: 0;
+		width: 100%;
+	}
+
+	@keyframes scroll {
+		0% {
+			transform: translateX(0);
+		}
+
+		100% {
+			transform: translateX(-100%);
+		}
+	}
+</style>
+<script type='module'
+	src='https://prod-apnortheast-a.online.tableau.com/javascripts/api/tableau.embedding.3.latest.min.js'></script>
+<div id="wrapper" class="marquee">
+	<div class="marquee-content" id="marquee-content">
+		
+	</div>
+</div>
+<script>
+	function getParams() {
+		let urlParams = new URLSearchParams(window.location.search);
+
+		// Safari fallback
+		if (!urlParams) {
+			urlParams = {};
+			const search = window.location.search.substr(1);
+			search.split('&').forEach(param => {
+				let [key, value] = param.split('=');
+				urlParams[key] = value;
+			})
+		}
+
+		return urlParams;
+	}
+	var _urlParams = getParams();
+	var text = _urlParams.get('text');
+
+	var t = `<div class="marquee-copy" style="width:${window.innerWidth}px">`
+		+ `	<tableau-viz id="tableau-viz2" src="https://${text}" width="${window.innerWidth}" height="100" hide-tabs toolbar="hidden" ></tableau-viz>`
+		+ '</div>'
+		+ `<div style="width: ${window.innerWidth}px;height: 100%;">`
+		+ `	<tableau-viz id="tableau-viz" src="https://${text}" width="${window.innerWidth}" height="100" hide-tabs toolbar="hidden" ></tableau-viz>`
+		+ '</div>'
+
+	document.getElementById("marquee-content").innerHTML = t;
+	
+</script>
