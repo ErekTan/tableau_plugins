@@ -1,0 +1,128 @@
+<style>
+	:root {
+		--bodybgcolor: transparent;
+
+		--titlecolor: #ffffff;
+		--titlebgcolor: #1a0aa8;
+		--titlefontsize: 14px;
+		--titleradius: 5px;
+		--titleheight: auto;
+
+		--bgborderwidth: 1px;
+		--bgcolor: #ffffff;
+		--bgbordercolor: #1a0aa8;
+		--bgradius: 20px;
+		--bgborderstyle: solid;
+	}
+
+	body,
+	html {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+		background-color: var(--bodybgcolor);
+	}
+
+	* {
+		box-sizing: border-box;
+	}
+
+	#title {
+		position: absolute;
+		top: 6px;
+		left: calc(var(--bgradius) + 6px);
+		height: var(--titleheight);
+		padding: 3px 8px;
+		font-weight: bold;
+		text-align: center;
+		border: 0;
+		color: var(--titlecolor);
+		font-size: var(--titlefontsize);
+		background-color: var(--titlebgcolor);
+		border-radius: var(--titleradius);
+		z-index: 2;
+		display: flex;
+		align-items: flex-start;
+		justify-content: center;
+		flex-direction: column;
+	}
+
+	#subTitleText {
+		font-size: calc(var(--titlefontsize) - 4px);
+		padding-bottom: 2px;
+	}
+
+	#backgroundBox {
+		border-width: var(--bgborderwidth);
+		border-color: var(--bgbordercolor);
+		border-style: var(--bgborderstyle);
+		border-radius: var(--bgradius);
+		background-color: var(--bgcolor);
+		position: absolute;
+		top: calc(var(--titleheight)/2 + 4px);
+		left: 2px;
+		right: 2px;
+		bottom: 2px;
+		z-index: 1;
+	}
+</style>
+<div id="title"><span id="titleText">Title</span><span id="subTitleText"></span></div>
+<div id="backgroundBox"></div>
+<script>
+	function parseUrlArgs() {
+		const searchParams = window.location.search.substring(1).split("/");
+		const args = {};
+
+		searchParams.forEach((param) => {
+			const keyValue = param.split("_");
+			if (keyValue.length === 2) {
+				args[keyValue[0]] = keyValue[1];
+			}
+		});
+
+		return args;
+	}
+
+	function setRootVariables(args) {
+		const root = document.documentElement;
+
+		Object.keys(args).forEach((key) => {
+			var v = args[key];
+			if (key.indexOf("color") >= 0) v = `#${v}`;
+			if (key.indexOf("size") >= 0) v = `${v}px`;
+			if (key.indexOf("width") >= 0) v = `${v}px`;
+			if (key.indexOf("height") >= 0) v = `${v}px`;
+			if (key.indexOf("radius") >= 0) v = `${v}px`;
+			root.style.setProperty(`--${key}`, v);
+		});
+	}
+
+	function setText(args) {
+		const titleDiv = document.getElementById("title");
+		const titleText = document.getElementById("titleText");
+		const subTitleText = document.getElementById("subTitleText");
+		const backgroundBoxDiv = document.getElementById("backgroundBox");
+
+		if (args["title"]) {
+			titleText.innerHTML = args["title"];
+		}
+		if (args["subTitle"]) {
+			subTitleText.innerHTML = args["subTitle"];
+		}
+	}
+
+	var url = "xxxx?bodybgcolor_000000/titlecolor_ffffff/titlefontsize_12/titlebgcolor_c70153/bgborderwidth_1/title_xude/subtitle_sub11/bgcolor_f0f0f0/bgbordercolor_0135c7/titleradius_5/bgradius_20/bgborderstyle_solid";
+	console.log(url);
+	const args = parseUrlArgs();
+	setText(args);
+	setRootVariables(args);
+
+	window.addEventListener('load', function () {
+		const titleDiv = document.getElementById("title");
+		const style = window.getComputedStyle(titleDiv);
+		const height = style.getPropertyValue('height');
+		document.documentElement.style.setProperty('--titleheight', height);
+	});
+</script>

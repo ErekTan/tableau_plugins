@@ -1,0 +1,41 @@
+<style>
+	html,
+	body {
+		box-sizing: content-box;
+		width: 100%;
+		height: 100%;
+		overflow: hidden;
+		padding: 0;
+		margin: 0;
+	}
+</style>
+<span id="text"></span>
+
+<script>
+
+	function getParams() {
+		let urlParams = new URLSearchParams(window.location.search);
+
+		// Safari fallback
+		if (!urlParams) {
+			urlParams = {};
+			const search = window.location.search.substr(1);
+			search.split('&').forEach(param => {
+				let [key, value] = param.split('=');
+				urlParams[key] = value;
+			})
+		}
+
+		return urlParams;
+	}
+
+	var _urlParams = getParams();
+	var text = _urlParams.get('text')
+	//参数格式：text=文字1|文字2|文字3,0,abc|000000,111|ffffff
+	//abc为显示文本，000000是文本背景色
+	//alert(text)
+	var agrs = text.split(",")
+	var i18n = agrs[0].split("|");
+	var curI18n = agrs[1];
+	document.getElementById('text').innerHTML = i18n[curI18n];
+</script>
