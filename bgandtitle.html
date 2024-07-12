@@ -113,8 +113,9 @@
 		}
 	}
 
-	var url = "xxxx?bodybgcolor_000000/titlecolor_ffffff/titlefontsize_12/titlebgcolor_c70153/bgborderwidth_1/title_xude/subtitle_sub11/bgcolor_f0f0f0/bgbordercolor_0135c7/titleradius_5/bgradius_20/bgborderstyle_solid";
-	console.log(url);
+	var url = "bodybgcolor_000000/titlecolor_ffffff/titlefontsize_12/titlebgcolor_c70153/bgborderwidth_1/title_xude/subtitle_sub11/bgcolor_f0f0f0/bgbordercolor_0135c7/titleradius_5/bgradius_20/bgborderstyle_solid";
+	console.log("support-args: ", url);
+	console.log("input-args: ", window.location.search.substring(1));
 	const args = parseUrlArgs();
 	setText(args);
 	setRootVariables(args);
