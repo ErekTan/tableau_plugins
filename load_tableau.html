@@ -1,0 +1,33 @@
+<style>
+	html,
+	body {
+		width: 100%;
+		height: 100%;
+		margin: 0;
+		padding: 0;
+		box-sizing: border-box;
+	}
+</style>
+
+<script>
+
+	function getParams() {
+		let urlParams = new URLSearchParams(window.location.search);
+
+		// Safari fallback
+		if (!urlParams) {
+			urlParams = {};
+			const search = window.location.search.substr(1);
+			search.split('&').forEach(param => {
+				let [key, value] = param.split('=');
+				urlParams[key] = value;
+			})
+		}
+
+		return urlParams;
+	}
+
+	var _urlParams = getParams();
+	var url = _urlParams.get('url')
+	window.location.href = url;
+</script>
